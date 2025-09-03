@@ -1,0 +1,29 @@
+# Core LangChain and AI
+langchain
+langchain-google-genai
+langchain-community
+
+# Vector Databases
+faiss-cpu
+chromadb
+
+# Document Processing
+pypdf2
+python-docx
+python-multipart
+
+# Web Framework
+fastapi
+uvicorn
+
+# Frontend
+streamlit
+
+# Utilities
+python-dotenv
+pydantic
+numpy
+tiktoken
+
+# Optional: For better performance
+openai
