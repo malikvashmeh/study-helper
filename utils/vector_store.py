@@ -19,6 +19,7 @@ from chromadb.config import Settings
 
 # LangChain imports
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from .local_embeddings import LocalEmbeddings
 from langchain.schema import Document
 from langchain.vectorstores import FAISS, Chroma
 
@@ -66,6 +67,7 @@ class VectorStoreManager:
         except Exception as e:
             logger.error(f"Error saving metadata: {e}")
     
+    
     def _initialize_embeddings(self, embedding_model: str, model_name: str):
         """Initialize embedding model"""
         if embedding_model.lower() == "google":
@@ -73,9 +75,11 @@ class VectorStoreManager:
                 model=model_name,
                 google_api_key=os.getenv("GOOGLE_API_KEY")
             )
+        elif embedding_model.lower() == "local":
+            return LocalEmbeddings()
         else:
-            raise ValueError(f"Unsupported embedding model: {embedding_model}. Only 'google' is supported.")
-    
+            raise ValueError(f"Unsupported embedding model: {embedding_model}. Supported: google, local")
+
     def _initialize_vector_store(self):
         """Initialize vector store based on type"""
         if self.vector_db_type == "faiss":
@@ -129,7 +133,12 @@ class VectorStoreManager:
                         # Merge with existing
                         logger.info(f"Merging {len(documents)} documents with existing {current_count}")
                         new_store = FAISS.from_documents(documents, self.embeddings)
-                        self.vector_store.merge_from(new_store)
+                        try:
+                            self.vector_store.merge_from(new_store)
+                        except Exception as merge_error:
+                            logger.warning(f"Merge failed (likely dimension mismatch): {merge_error}")
+                            logger.info("Creating fresh FAISS store due to dimension mismatch")
+                            self.vector_store = FAISS.from_documents(documents, self.embeddings)
                 
                 # Save FAISS index
                 faiss_path = self.vector_db_path / "faiss_index"

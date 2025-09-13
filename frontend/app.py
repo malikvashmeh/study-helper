@@ -57,7 +57,8 @@ class StudyMateBot:
         """Upload document to API"""
         try:
             files = {"file": (file.name, file.getvalue(), file.type)}
-            response = requests.post(f"{self.api_url}/upload", files=files)
+            data = {"mode": "add"}
+            response = requests.post(f"{self.api_url}/upload", files=files, data=data)
             
             if response.status_code == 200:
                 return response.json()
@@ -224,7 +225,8 @@ class StudyMateBot:
         """Upload document and add to existing collection without clearing"""
         try:
             files = {"file": (file.name, file.getvalue(), file.type)}
-            response = requests.post(f"{self.api_url}/upload", files=files)
+            data = {"mode": "add"}
+            response = requests.post(f"{self.api_url}/upload", files=files, data=data)
             
             if response.status_code == 200:
                 return response.json()

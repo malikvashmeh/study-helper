@@ -3,6 +3,11 @@ langchain
 langchain-google-genai
 langchain-community
 
+# Local Embeddings (Primary)
+sentence-transformers
+torch
+transformers
+
 # Vector Databases
 faiss-cpu
 chromadb
@@ -24,6 +29,7 @@ python-dotenv
 pydantic
 numpy
 tiktoken
+scikit-learn
 
-# Optional: For better performance
+# Optional: For API fallbacks
 openai
