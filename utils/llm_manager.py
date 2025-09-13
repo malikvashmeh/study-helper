@@ -5,6 +5,7 @@ Handles Gemini LLM provider and conversation memory
 
 import os
 import logging
+from dotenv import load_dotenv
 from typing import List, Dict, Any, Optional
 
 # LangChain imports
@@ -26,6 +27,8 @@ class LLMManager:
                  temperature: float = 0.7,
                  max_tokens: int = 1000):
         
+        # Load environment variables
+        load_dotenv()
         self.llm_provider = llm_provider.lower()
         self.model_name = model_name
         self.temperature = temperature

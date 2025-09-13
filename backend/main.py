@@ -89,8 +89,8 @@ def get_components():
         vector_store = VectorStoreManager(
             vector_db_type=os.getenv("VECTOR_DB_TYPE", "faiss"),
             vector_db_path=os.getenv("VECTOR_DB_PATH", "./data/vector_db"),
-            embedding_model="google",  # Default to Google
-            embedding_model_name=os.getenv("EMBEDDING_MODEL", "models/embedding-001")
+            embedding_model=os.getenv("EMBEDDING_MODEL", "google"),
+            embedding_model_name=os.getenv("EMBEDDING_MODEL_NAME", "models/embedding-001")
         )
     
     if llm_manager is None:
