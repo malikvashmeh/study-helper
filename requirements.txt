@@ -34,5 +34,5 @@ scikit-learn==1.3.2
 # Optional: For API fallbacks
 openai==1.3.7
 
-# Vercel specific
-vercel==0.5.3
+# Hugging Face Spaces specific
+gradio==4.8.0
